@@ -21,7 +21,7 @@
 ## 配套
 - ✅ 跑馬燈（`taiwanFestMarquee`）、manual（含完整創作者）、使用警語（底部＋首訪自動跳，`taiwanFestSeenWarning`）、⚙常用設定收合式（`taiwanFestSettings`；展開 `taiwanFestSetOpen`）、偏好 `taiwanFestPrefs`、PWA（`tools/make_icons.py` 畫燈籠；改 js 記得 `CACHE_NAME` +1）、訪客計數器 `page_id=m255525.taiwantemplefestival`、RWD（375px 無橫向捲動）。
 - ❌ 序號授權
-- GitHub Pages（**2026-11-15 已上線**）：`master`＋`.github/workflows/deploy-pages.yml`，https://m255525.github.io/taiwan-temple-festival-calendar/ （repo 由使用者自己 `gh repo create`，Pages 由 Claude 用 `gh api` 開啟，push 觸發的部署直接成功）。程式牆在 `REPO_META`，github-dashboard 已補。
+- GitHub Pages（**2026-11-15 已上線**）：`master`＋`.github/workflows/deploy-pages.yml`，https://m255525.github.io/taiwan-temple-festival-calendar/ （repo 由使用者自己 `gh repo create`，Pages 由 Claude 用 `gh api` 開啟，push 觸發的部署直接成功）。程式牆在 `REPO_META`，github-dashboard 已補。已放進創作者小鎮「社群大街」（接力線 c24：廟會月曆 → 內容行事曆 → 社群貼文）。
 
 ## Port／測試
 - port **8886**（`.claude/launch.json` 的 `taiwan-temple-festival-calendar`）。

@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>台灣廟會節慶月曆</title>
+<meta name="description" content="3D 台灣廟會節慶月曆：拖動全年日期軸，看哪裡正在遶境、放炮、放天燈、放水燈。21 個廟會節慶依農曆換算國曆（2025～2029），大甲媽、白沙屯、鹽水蜂炮、雞籠中元祭、東港迎王、西港刈香…附日程、須知與資料來源。">
+<meta name="theme-color" content="#1f1410">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="廟會月曆">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<style>
+:root{
+  --ink:#2b1d14; --ink2:#5a4636; --mute:#8a7563; --paper:#fbf3e2; --paper2:#f3e6c9; --line:#dcc79c; --edge:#7a1f17;
+  --red:#b3261e; --red2:#d6372e; --gold:#c9962e; --gold2:#e8c35a; --lac:#1f1410; --jade:#2f6b5a; --wash:#f6e2c0;
+  --shadow:0 8px 22px rgba(60,20,10,.28); --mq:0px; --r:4px;
+  --serif:'Noto Serif TC','PMingLiU',serif; --font:'Noto Sans TC',system-ui,sans-serif;
+  --sky1:#3b2a4a; --sky2:#f0b07a;
+  --fret:repeating-linear-gradient(90deg,var(--gold) 0 6px,transparent 6px 9px,var(--gold) 9px 12px,transparent 12px 18px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ color-scheme:dark; --ink:#f3e6cf; --ink2:#d9c4a3; --mute:#a99278; --paper:#2a1d16; --paper2:#352419; --line:#5e4430; --edge:#e8c35a; --wash:#3a2618; --shadow:0 8px 22px rgba(0,0,0,.55); }
+}
+:root[data-theme="dark"]{ color-scheme:dark; --ink:#f3e6cf; --ink2:#d9c4a3; --mute:#a99278; --paper:#2a1d16; --paper2:#352419; --line:#5e4430; --edge:#e8c35a; --wash:#3a2618; --shadow:0 8px 22px rgba(0,0,0,.55); }
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{font-family:var(--font);color:var(--ink);background:#2b1d24;-webkit-font-smoothing:antialiased}
+body.has-marquee{--mq:30px}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--red)}
+:root[data-theme="dark"] a{color:var(--gold2)}
+[hidden]{display:none!important}
+#marqueeBar{position:fixed;top:0;left:0;right:0;height:30px;background:var(--lac);color:var(--gold2);z-index:1500;overflow:hidden;display:none;align-items:center;font-size:13px;font-weight:700;border-bottom:1px solid var(--gold)}
+#marqueeBar.show{display:flex}
+#marqueeTrack{display:inline-block;white-space:nowrap;padding-left:100%;animation:marquee 30s linear infinite}
+#marqueeBar:hover #marqueeTrack{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+#stage{position:fixed;left:0;right:0;bottom:0;top:var(--mq);background:linear-gradient(180deg,var(--sky1) 0%,#8a4a5a 34%,var(--sky2) 66%,#f6d7a8 100%);transition:background 1.2s}
+#stage canvas{display:block;width:100%;height:100%;touch-action:none}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lab3d{position:absolute;left:0;top:0;white-space:nowrap;transition:opacity .2s;will-change:transform}
+.lab3d.off{opacity:0;pointer-events:none!important}
+/* 地點標籤＝小燈籠牌 */
+.plab{pointer-events:auto;border:1.5px solid var(--gold);background:#8f1d17;color:#fff3d6;font-family:var(--serif);font-size:13px;font-weight:700;padding:2px 9px 2px 6px;border-radius:10px;box-shadow:0 2px 0 #4a0f0b,0 0 0 2px rgba(0,0,0,.08);display:flex;align-items:center;gap:5px}
+.plab i{width:9px;height:9px;border-radius:50%;display:inline-block;background:#ccc;box-shadow:0 0 0 1.5px #fff3d6}
+.plab em{font-style:normal;font-size:10.5px;font-family:var(--font);font-weight:700;background:var(--gold2);color:#4a0f0b;border-radius:3px;padding:0 4px}
+.plab em:empty{display:none}
+.plab.st-later,.plab.st-tbd,.plab.st-pause{background:#5a4636;border-color:#a99278;color:#f3e6cf;opacity:.78}
+.plab.st-live{box-shadow:0 2px 0 #4a0f0b,0 0 12px 3px rgba(255,140,60,.75)}
+.plab:hover,.plab.on{background:var(--gold2);color:#4a0f0b;opacity:1}
+.plab.on{font-size:15px;border-color:#4a0f0b}
+.ilab{font-family:var(--serif);font-weight:900;color:#5a2a1a;font-size:16px;text-shadow:0 0 4px #fff3d6,0 0 8px #fff3d6;letter-spacing:.15em}
+.ilab.main{font-size:28px;letter-spacing:.5em;color:rgba(122,31,23,.55)}
+.pk{font-size:11px;color:#4a3a2c;text-shadow:0 0 3px #fff3d6,0 0 6px #fff3d6}
+.sealab{font-family:var(--serif);font-size:17px;color:rgba(255,240,215,.6);letter-spacing:.3em}
+
+.ui{position:fixed;z-index:20}
+.card-ui{background:var(--paper);border:1.5px solid var(--edge);border-radius:var(--r);box-shadow:var(--shadow)}
+/* 標題：黑漆金字的廟匾 */
+#brand{left:14px;top:calc(var(--mq) + 12px);padding:9px 18px 10px 12px;display:flex;gap:10px;align-items:center;max-width:390px;color:#f6d77a;
+  background:linear-gradient(180deg,#2a1a12,#160d09);border:3px double var(--gold);border-radius:6px;box-shadow:var(--shadow),inset 0 0 0 1px #4a2f1c}
+#brand h1{margin:0;font-family:var(--serif);font-weight:900;font-size:25px;line-height:1.15;letter-spacing:.12em;text-shadow:0 1px 0 #6a4a14}
+#brand p{margin:2px 0 0;font-size:12px;color:#d9b97a}
+
+/* 日期軸 */
+#ctrl{left:400px;right:400px;bottom:14px;padding:8px 12px 8px;display:flex;gap:12px;align-items:center;border-top:4px solid var(--red)}
+#dayBox{flex:none;text-align:center;min-width:92px;padding:4px 6px;border:1.5px solid var(--red);border-radius:4px;background:var(--wash);position:relative}
+#dayBox::before{content:'';position:absolute;left:6px;right:6px;top:-6px;height:4px;background:var(--fret)}
+#dayBig{display:block;font-family:var(--serif);font-weight:900;font-size:22px;line-height:1.1;color:var(--red)}
+:root[data-theme="dark"] #dayBig{color:var(--gold2)}
+#daySub{display:block;font-size:12px;color:var(--ink2);font-weight:700}
+#yearRow{display:flex;align-items:center;justify-content:center;gap:2px;margin-top:2px}
+#yearRow button{border:0;background:none;padding:0 4px;font-size:12px;color:var(--red)}
+#yearRow b{font-size:12.5px}
+#axWrap{flex:1;min-width:0;position:relative;height:70px}
+#axCv{display:block;width:100%;height:100%;cursor:pointer;touch-action:none}
+.cbtns{flex:none;display:flex;flex-direction:column;gap:4px}
+#play{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold);background:var(--red);color:#fff3d6;font-size:15px}
+#play.on{background:var(--lac);color:var(--gold2)}
+#btnNow{border:1.5px solid var(--line);background:var(--paper2);border-radius:6px;font-size:11px;padding:1px 4px}
+
+/* 右側：紅紙籤詩 */
+#panel{right:14px;top:calc(var(--mq) + 12px);bottom:14px;width:384px;display:flex;flex-direction:column;overflow:hidden;border-top:6px solid var(--red)}
+#panel::before{content:'';position:absolute;left:10px;right:10px;top:4px;height:3px;background:var(--fret);opacity:.8}
+#panelHead{padding:14px 14px 10px;border-bottom:1.5px solid var(--line);max-height:66%;overflow-y:auto}
+.selrow{display:flex;gap:6px}
+.selrow select{flex:1;min-width:0;font:inherit;font-size:14px;padding:7px 8px;border-radius:4px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
+#place{margin-top:10px}
+#place h2{margin:0;font-family:var(--serif);font-weight:900;font-size:22px;line-height:1.3;color:var(--red)}
+:root[data-theme="dark"] #place h2{color:var(--gold2)}
+#place h2 small{display:block;font-family:var(--font);font-weight:500;font-size:12px;color:var(--mute)}
+#place p{margin:6px 0 0;font-size:13.5px;color:var(--ink2);line-height:1.75}
+.lnk{border:0;background:none;padding:0;color:var(--red);text-decoration:underline;font-weight:700}
+.meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:700;border-radius:3px;padding:1px 8px;color:#fff}
+.tchip{font-size:11.5px;border-radius:999px;padding:1px 8px;background:var(--paper2);border:1px solid var(--line);color:var(--ink2)}
+.when{margin-top:8px;border:1.5px solid var(--red);border-radius:4px;background:var(--wash);padding:7px 10px;position:relative}
+.when b{font-family:var(--serif);font-size:19px;color:var(--red);display:block;line-height:1.3}
+:root[data-theme="dark"] .when b{color:var(--gold2)}
+.when small{display:block;font-size:12px;color:var(--ink2);line-height:1.55}
+.when .cd{position:absolute;right:8px;top:6px;font-size:12px;font-weight:700;color:#fff;background:var(--red);border-radius:3px;padding:0 6px}
+.note{margin-top:6px;font-size:12.5px;line-height:1.55;color:#6a4a10;background:#fdf0c8;border-left:3px solid var(--gold);padding:4px 8px}
+:root[data-theme="dark"] .note{background:#3d3018;color:#f3e3b4}
+.subs{margin:8px 0 0;padding:0;list-style:none;font-size:12.5px;border-left:2px dotted var(--red);padding-left:10px}
+.subs li{margin:2px 0;color:var(--ink2)}
+.subs li b{color:var(--ink);margin-right:4px}
+.subs li.now b{color:var(--red)}
+.ystrip{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-top:8px}
+.yc{border:1.5px solid var(--line);border-radius:3px;background:var(--paper);padding:2px 0;display:flex;flex-direction:column;align-items:center;line-height:1.2;font-size:10.5px;color:var(--ink2)}
+.yc b{font-size:11.5px;color:var(--ink)}
+.yc.on{border-color:var(--red);box-shadow:inset 0 -3px 0 var(--red)}
+.yc.off{opacity:.55}
+details.tips{margin-top:8px;font-size:12.5px;color:var(--ink2)}
+details.tips summary{cursor:pointer;color:var(--red);font-weight:700}
+details.tips ul{margin:4px 0 0;padding-left:18px;line-height:1.65}
+.src{margin-top:6px;font-size:11.5px;color:var(--mute);line-height:1.6}
+.src a{color:var(--mute)}
+.acts{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.abtn{border:1.5px solid var(--red);background:var(--paper);color:var(--red);border-radius:3px;padding:3px 9px;font-size:12.5px;font-weight:700}
+.abtn:hover{background:var(--red);color:#fff3d6}
+:root[data-theme="dark"] .abtn{color:var(--gold2);border-color:var(--gold)}
+.holy{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.holy span{font-size:12px;font-weight:700;border-radius:3px;padding:1px 8px;background:var(--gold2);color:#4a0f0b}
+#sum{margin-top:8px;font-size:13px;background:var(--wash);border-radius:3px;padding:6px 10px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;border-left:4px solid var(--red)}
+#sum b{font-family:var(--serif);font-size:20px;color:var(--red)}
+#list{flex:1;overflow-y:auto;padding:10px 12px 14px;display:flex;flex-direction:column;gap:7px}
+.fcard{border:1.5px solid var(--line);background:var(--paper);border-radius:3px;padding:7px 10px;text-align:left;display:grid;grid-template-columns:1fr auto;gap:2px 8px;align-items:center;border-left:5px solid #b9ab96}
+.fcard.live{border-left-color:var(--red2);background:linear-gradient(90deg,rgba(214,55,46,.1),transparent 60%)}
+.fcard.soon{border-left-color:var(--gold)}
+.fcard:hover{border-color:var(--red)}
+.fcard b{font-family:var(--serif);font-size:15.5px;font-weight:900}
+.fcard .cd{font-size:12px;font-weight:700;color:var(--red);white-space:nowrap}
+.fcard small{grid-column:1/-1;font-size:11.5px;color:var(--mute);line-height:1.55}
+.lgrp{font-family:var(--serif);font-size:14px;font-weight:900;color:var(--red);margin:6px 2px 0;display:flex;align-items:center;gap:6px}
+.lgrp::after{content:'';flex:1;height:1px;background:var(--line)}
+#panelFoot{display:flex;justify-content:space-between;align-items:center;gap:6px 8px;flex-wrap:wrap;padding:7px 12px;border-top:1.5px solid var(--line);font-size:12px;color:var(--mute)}
+#panelFoot button{border:0;background:none;padding:0;color:var(--red);text-decoration:underline;font-size:12px}
+#panelFoot img{display:block}
+#panelFoot .warnline{flex-basis:100%;color:#9a3a1a}
+
+#legend{left:14px;bottom:14px;padding:8px 12px;font-size:12px;color:var(--ink2);width:370px;line-height:1.55}
+#legend .lg{display:flex;flex-wrap:wrap;gap:3px 10px}
+#legend .lg span{display:flex;align-items:center;gap:4px}
+#legend .lg i{width:11px;height:11px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.2)}
+#legend .lt{font-family:var(--serif);font-weight:900;color:var(--red);font-size:13.5px}
+#tools{left:14px;bottom:150px;display:flex;flex-direction:column;gap:6px}
+.tbtn{border:1.5px solid var(--gold);background:var(--paper);border-radius:3px;padding:5px 11px;font-size:13px;box-shadow:0 2px 0 rgba(90,30,10,.35);text-align:left}
+.tbtn:hover{background:var(--red);color:#fff3d6}
+.tbtn.hl{background:var(--gold2);color:#4a0f0b}
+a.tbtn{text-decoration:none;color:var(--ink)}
+
+#loading{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:radial-gradient(circle at 50% 40%,#5a1a14,#1f1410 70%);transition:opacity .6s}
+#loading .box{background:var(--paper);border:3px double var(--gold);border-radius:6px;padding:16px 26px;text-align:center;box-shadow:var(--shadow)}
+#loading.hide{opacity:0;pointer-events:none}
+#loading svg .bw{transform-origin:center;animation:toss 1.4s ease-in-out infinite}
+#loading svg .bw:nth-child(2){animation-delay:.12s}
+@keyframes toss{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-14px) rotate(160deg)}70%{transform:translateY(0) rotate(180deg)}}
+#loadMsg{font-family:var(--serif);font-size:21px;font-weight:900;margin-top:4px;color:var(--red)}
+#loading small{display:block;font-size:13px;color:var(--ink2);max-width:300px;margin-top:4px}
+
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;padding-top:calc(16px + var(--mq));background:rgba(30,12,8,.55)}
+.modal.show{display:flex}
+.sheet{background:var(--paper);border:3px double var(--gold);border-radius:6px;box-shadow:0 18px 50px rgba(20,8,5,.45);width:min(860px,100%);max-height:calc(100vh - 32px - var(--mq));overflow:auto;position:relative;border-top:8px solid var(--red)}
+.x{position:absolute;right:12px;top:12px;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--edge);background:var(--paper);font-size:18px;z-index:2}
+.x:hover{background:var(--red);color:#fff}
+.pad .sheet{padding:20px 22px}
+.pad h2{font-family:var(--serif);font-weight:900;margin:0 0 10px;padding-right:44px;color:var(--red);font-size:26px}
+:root[data-theme="dark"] .pad h2{color:var(--gold2)}
+.pad h3{font-family:var(--serif)}
+.warn-box{border:1.5px solid #e2a89a;background:#fff3ee;color:#6a2a22;border-radius:6px;padding:10px 14px;font-size:13.5px;line-height:1.7}
+.warn-box ul{margin:6px 0 0;padding-left:20px}
+.creator-box{margin-top:12px;border:1.5px solid var(--line);border-radius:6px;padding:10px 14px;font-size:13.5px;line-height:1.7;color:var(--ink2);background:var(--paper)}
+.etq{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.etq section{border:1.5px solid var(--line);border-left:4px solid var(--red);border-radius:3px;padding:8px 12px;background:var(--paper)}
+.etq h3{margin:0 0 4px;font-weight:900;font-size:18px}
+.etq ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.65;color:var(--ink2)}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;margin-top:10px}
+.gloss div{font-size:13px;line-height:1.55;border-left:3px solid var(--gold);padding:2px 8px;color:var(--ink2)}
+.gloss b{color:var(--ink)}
+.pbtn{border:1.5px solid var(--gold);background:var(--red);color:#fff3d6;border-radius:4px;padding:8px 14px;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip2{font-size:13px;border:1.5px solid var(--line);background:var(--paper2);border-radius:999px;padding:3px 10px}
+button.chip2:hover,a.chip2:hover{border-color:var(--red);color:var(--red)}
+.sbtn{border:1.5px solid var(--line);background:var(--paper2);border-radius:6px;padding:4px 10px;font-size:12.5px}
+.setbar{display:flex;justify-content:flex-end;gap:6px;margin-bottom:6px}
+.set-sec{border:1.5px solid var(--line);border-radius:6px;margin-bottom:8px;background:var(--paper)}
+.set-sec summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;font-weight:700;font-size:14px}
+.set-sec summary::-webkit-details-marker{display:none}
+.set-sec summary::before{content:'▸';color:var(--red);margin-right:2px}
+.set-sec[open] summary::before{content:'▾'}
+.set-sec summary span{flex:1}
+.set-sec summary em{font-style:normal;font-weight:400;font-size:12px;color:var(--mute)}
+.set-body{padding:0 12px 12px;font-size:13.5px;color:var(--ink2)}
+.set-body select{font:inherit;padding:6px 8px;border-radius:6px;border:1.5px solid var(--line);background:var(--paper2);color:var(--ink);width:100%;margin-top:4px}
+.set-body label.ck{display:flex;align-items:center;gap:8px}
+.set-body input[type=checkbox]{width:20px;height:20px}
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--lac);color:var(--gold2);border:1.5px solid var(--gold);padding:7px 14px;border-radius:6px;z-index:200;font-size:13.5px;font-weight:700;max-width:calc(100vw - 32px)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .warn-box{background:#3a2226;color:#ffd9d3;border-color:#7a3a35} :root:not([data-theme="light"]) .note{background:#3d3018;color:#f3e3b4} }
+:root[data-theme="dark"] .warn-box{background:#3a2226;color:#ffd9d3;border-color:#7a3a35}
+
+#sheetBtn{display:none}
+@media (max-width:1250px){
+  #legend{display:none}
+  #ctrl{left:14px}
+  #tools{bottom:118px}
+}
+@media (max-width:760px){
+  #brand{left:10px;right:10px;top:calc(var(--mq) + 8px);max-width:none;padding:6px 12px 7px}
+  #brand h1{font-size:19px}
+  #brand p{display:none}
+  #brand svg{width:30px;height:30px}
+  #ctrl{left:10px;right:10px;top:calc(var(--mq) + 60px);bottom:auto;padding:6px 8px;gap:6px}
+  #dayBox{min-width:74px;padding:2px 4px}
+  #dayBig{font-size:17px}
+  #daySub{font-size:11px}
+  #axWrap{height:58px}
+  .cbtns{display:none}
+  #panel{left:0;right:0;bottom:0;top:auto;width:auto;height:52vh;border-radius:10px 10px 0 0;transition:height .3s}
+  #panel.min{height:150px}
+  #sheetBtn{display:block;position:absolute;right:10px;top:12px;border:1.5px solid var(--line);background:var(--paper2);border-radius:6px;font-size:12px;padding:3px 8px;z-index:2}
+  #panelHead{padding:12px 12px 8px}
+  .selrow{padding-right:58px}
+  #panel.min #place > :not(h2):not(.holy):not(.meta){display:none}
+  #panel.min #list,#panel.min #panelFoot,#panel.min #sum{display:none}
+  #panel.min #panelHead{border-bottom:0;max-height:none}
+  #tools{left:10px;bottom:calc(52vh + 10px);flex-direction:row;flex-wrap:wrap;right:10px;gap:4px}
+  body.sheet-min #tools{bottom:160px}
+  .tbtn{padding:3px 6px;font-size:11px;white-space:nowrap}
+  .etq{grid-template-columns:1fr}
+  .modal{padding:8px;padding-top:calc(8px + var(--mq))}
+}
+@media (prefers-reduced-motion: reduce){ #loading svg .bw{animation:none} #marqueeTrack{animation:none} }
+</style>
+</head>
+<body>
+<div id="marqueeBar"><div id="marqueeTrack"></div></div>
+
+<div id="stage"><div id="labels"></div></div>
+
+<header id="brand" class="ui">
+  <svg width="42" height="42" viewBox="0 0 44 44" aria-hidden="true">
+    <path d="M22 4 L22 8" stroke="#e8c35a" stroke-width="2"/>
+    <ellipse cx="22" cy="22" rx="13" ry="14" fill="#d6372e" stroke="#e8c35a" stroke-width="2"/>
+    <path d="M12 22 H32 M14 15 H30 M14 29 H30" stroke="#f6a04a" stroke-width="1.4" opacity=".8"/>
+    <rect x="16" y="6" width="12" height="4" rx="1" fill="#e8c35a"/><rect x="16" y="34" width="12" height="4" rx="1" fill="#e8c35a"/>
+    <path d="M22 38 L22 43" stroke="#e8c35a" stroke-width="2"/>
+  </svg>
+  <div><h1>台灣廟會節慶月曆</h1><p>拖動日期，看哪裡正在遶境、放炮、放天燈</p></div>
+</header>
+
+<nav id="ctrl" class="ui card-ui" aria-label="日期">
+  <div id="dayBox"><b id="dayBig">1/1</b><span id="daySub">正月初一</span>
+    <div id="yearRow"><button type="button" id="yPrev" aria-label="上一年">◀</button><b id="yearTxt">2026</b><button type="button" id="yNext" aria-label="下一年">▶</button></div></div>
+  <div id="axWrap" title="長條＝那天在辦的廟會數（淡色＝日期待公告的大約範圍）；點一下或拖曳換日期"><canvas id="axCv" aria-label="全年日期軸"></canvas></div>
+  <div class="cbtns">
+    <button id="play" type="button" title="自動播放：一天一天往後跑" aria-label="自動播放">▶</button>
+    <button id="btnNow" type="button" title="跳到今天">今天</button>
+  </div>
+</nav>
+
+<aside id="panel" class="ui card-ui" aria-label="廟會">
+  <button id="sheetBtn" type="button">收合</button>
+  <div id="panelHead">
+    <div class="selrow">
+      <select id="selRegion" aria-label="地區"></select>
+      <select id="selFest" aria-label="廟會"></select>
+    </div>
+    <div id="place"></div>
+    <div id="sum"></div>
+  </div>
+  <div id="list"></div>
+  <div id="panelFoot">
+    <span class="warnline">⚠ 日期依農曆換算與公開資料整理，實際日程與交通管制以廟方、主辦單位公告為準。<button type="button" id="btnEtq2">節慶須知</button></span>
+    <span>創作者：<button type="button" id="btnCreator">Mark Tsai（蔡豐全）</button></span>
+    <img src="https://visitor-badge.laobi.icu/badge?page_id=m255525.taiwantemplefestival" alt="訪客次數" height="20">
+  </div>
+</aside>
+
+<div id="tools" class="ui">
+  <button class="tbtn" id="btnAll" type="button">🗺 看全台灣</button>
+  <button class="tbtn hl" id="btnEtq" type="button">🙏 節慶須知</button>
+  <button class="tbtn" id="btnSet" type="button">⚙ 常用設定</button>
+  <button class="tbtn" id="installBtn" type="button">📲 加入主畫面</button>
+  <button class="tbtn" id="btnAbout" type="button">⚠ 使用警語</button>
+  <a class="tbtn" href="manual.html" target="_blank" rel="noopener">📖 操作手冊</a>
+</div>
+
+<div id="legend" class="ui card-ui">
+  <div class="lt">地圖上的燈籠牌</div>
+  <div class="lg"><span><i style="background:#e8322a"></i>舉辦中（廟埕發光）</span><span><i style="background:#e8a52a"></i>30 天內</span><span><i style="background:#e8c87a"></i>日期待公告的大約期間</span><span><i style="background:#b9ab96"></i>還早／今年沒有</span></div>
+  <div style="font-size:11.5px;margin-top:3px">農曆日期依香港天文台公曆農曆對照表換算（2025～2029）。進香路線、建築與景物都是示意。</div>
+</div>
+
+<div id="loading">
+  <div class="box">
+    <svg width="80" height="46" viewBox="0 0 80 46" aria-hidden="true">
+      <g><path class="bw" d="M14 30 C14 14 34 14 34 30 Z" fill="#d6372e" stroke="#7a1f17" stroke-width="1.5"/><path class="bw" d="M46 30 C46 14 66 14 66 30 Z" fill="#d6372e" stroke="#7a1f17" stroke-width="1.5"/></g>
+      <path d="M8 40 H72" stroke="#c9962e" stroke-width="2"/>
+    </svg>
+    <div id="loadMsg">擲筊中，請稍候…</div>
+    <small id="loadSub">第一次開啟需要下載 3D 繪圖元件，並把農曆換算成國曆</small>
+  </div>
+</div>
+
+<div id="etq" class="modal pad" role="dialog" aria-modal="true" aria-labelledby="etqTitle">
+  <div class="sheet">
+    <button class="x" type="button" data-close aria-label="關閉">✕</button>
+    <h2 id="etqTitle">🙏 節慶須知</h2>
+    <p style="margin:0 0 12px;color:var(--ink2);font-size:14px"><b>尊重信仰、注意安全、照顧環境。</b>廟會是當地人的信仰與生活，我們是去參與、學習的客人。</p>
+    <div class="etq" id="etqBody"></div>
+    <h3 style="margin:16px 0 0">日期標示</h3>
+    <div class="gloss" id="stBody"></div>
+    <h3 style="margin:16px 0 0">廟會小辭典</h3>
+    <div class="gloss" id="glossBody"></div>
+  </div>
+</div>
+
+<div id="settings" class="modal pad" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+  <div class="sheet">
+    <button class="x" type="button" data-close aria-label="關閉">✕</button>
+    <h2 id="setTitle">⚙ 常用設定</h2>
+    <div class="setbar"><button class="sbtn" type="button" id="setOpenAll">全部展開</button><button class="sbtn" type="button" id="setCloseAll">全部收合</button></div>
+    <details class="set-sec" data-sec="day"><summary><span>📅 開啟時的日期</span><em id="sv-day"></em></summary>
+      <div class="set-body"><select id="setDay"><option value="today">今天</option><option value="last">記住上次看的日期</option></select></div></details>
+    <details class="set-sec" data-sec="labels"><summary><span>🏮 地圖上的燈籠牌</span><em id="sv-labels"></em></summary>
+      <div class="set-body"><label class="ck"><input type="checkbox" id="setLabels"> 顯示廟會名稱（選中的仍會顯示）</label></div></details>
+    <details class="set-sec" data-sec="motion"><summary><span>🌬 動畫</span><em id="sv-motion"></em></summary>
+      <div class="set-body">減少動態：神轎、人群、火花、天燈、海浪與雲幾乎不動。
+        <select id="setMotion"><option value="auto">跟隨系統</option><option value="full">完整動畫</option><option value="reduce">減少動態</option></select></div></details>
+    <details class="set-sec" data-sec="play"><summary><span>▶ 自動播放速度</span><em id="sv-play"></em></summary>
+      <div class="set-body"><select id="setPlay"><option value="400">慢（每 0.4 秒一天）</option><option value="180">標準（每 0.18 秒一天）</option><option value="70">快（每 0.07 秒一天）</option></select></div></details>
+    <details class="set-sec" data-sec="theme"><summary><span>🎨 介面配色</span><em id="sv-theme"></em></summary>
+      <div class="set-body"><select id="setTheme"><option value="auto">跟隨系統</option><option value="light">淺色</option><option value="dark">深色</option></select></div></details>
+    <details class="set-sec" data-sec="about"><summary><span>ℹ 關於本工具</span><em>手冊・警語・創作者</em></summary>
+      <div class="set-body">
+        <div class="chips">
+          <a class="chip2" href="manual.html" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">📖 操作手冊</a>
+          <button class="chip2" type="button" data-open-about>⚠ 使用警語</button>
+          <button class="chip2" type="button" data-open-about="creator">👤 創作者資訊</button>
+          <button class="chip2" type="button" data-install>📲 加入主畫面</button>
+          <button class="chip2" type="button" data-open-etq>🙏 節慶須知</button>
+        </div>
+        <p style="font-size:12px;color:var(--mute);margin:10px 0 0;display:flex;align-items:center;gap:8px">訪客數 <img src="https://visitor-badge.laobi.icu/badge?page_id=m255525.taiwantemplefestival" alt="訪客次數" height="20"></p>
+      </div></details>
+    <p style="font-size:12px;color:var(--mute);margin:10px 0 0">設定只存在這台裝置的瀏覽器，不會上傳。</p>
+  </div>
+</div>
+
+<div id="about" class="modal pad" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+  <div class="sheet">
+    <button class="x" type="button" data-close aria-label="關閉">✕</button>
+    <h2 id="aboutTitle">關於台灣廟會節慶月曆</h2>
+    <div class="warn-box">
+      <strong>使用警語</strong>
+      <ul>
+        <li>「農曆固定」的祭典，國曆日期是本工具依<b>香港天文台公曆與農曆對照表（2025～2029）</b>換算的結果；實際活動常有前後幾天的系列節目，<b>日程、時間與地點一律以主辦廟宇與政府公告為準</b>。</li>
+        <li>大甲媽、白沙屯媽祖、東港迎王、西港刈香等祭典的日期<b>每年擲筊或擇日決定</b>，沒有公告的年份只用淡色標出大約月份，<b>不是預測</b>；「三年一科」的祭典只在丑、辰、未、戌年舉辦。</li>
+        <li>颱風、豪雨、疫情或經費等因素可能讓活動延期、改制或停辦（例如頭城搶孤 2026 年停辦搶孤賽事）。出發前請再查最新消息。</li>
+        <li>蜂炮、炸寒單、炸龍、搶孤等活動有受傷風險，參加者請做好完整防護並遵守現場管制。</li>
+        <li>地圖上的廟宇、神轎、進香路線與景物都是<b>示意</b>，不是實際路線與建築外觀，不可作為導航依據。</li>
+        <li>本工具為個人製作的教學工具，與各廟宇、主辦單位及政府機關無關，也不代表推薦或背書；節日說法採常見民間說法，各地各廟可能不同。</li>
+        <li>本工具內容（文字說明、介面、3D 模型）僅供教學、課程及個人使用，禁止未經授權公開發布、販售或商業化使用。</li>
+      </ul>
+    </div>
+    <p style="margin:10px 0 0;font-size:13px;color:var(--ink2);line-height:1.7"><b>資料來源</b>：農曆與節氣——香港天文台「公曆與農曆日期對照表」；祭典資訊——各主辦廟宇公告、內政部「臺灣宗教文化地圖」、文化部國家文化資產網、縣市政府與公開報導（2026-11 整理，每個廟會都附來源連結）；台灣與離島輪廓、地形——沿用作者「台灣賞鳥地圖」的手描簡化圖。完整清單見操作手冊。</p>
+    <p style="margin:12px 0 0"><button class="pbtn" type="button" id="btnEtq3">🙏 看節慶須知</button></p>
+    <div class="creator-box" id="creatorBox">
+      <p style="margin:0"><strong>創作者：Mark Tsai（蔡豐全）</strong></p>
+      <p style="margin:4px 0">勞動力發展署創業顧問（2017 起）、經濟部 SBIR 海選專案評審委員（2019－2024），長期擔任小型企業人力提升計畫顧問與多項政府計畫業師、評審委員；專長銷售數據分析、AI 工具運用、政府補助計畫申請、創業與跨境電商。</p>
+      <p style="margin:0"><a href="manual.html#creator" target="_blank" rel="noopener">完整經歷與證照</a>｜<a href="mailto:tsaimark@gmail.com">tsaimark@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+<div id="toast" hidden></div>
+
+<script src="data.js"></script>
+<script src="scene.js"></script>
+<script src="app.js"></script>
+<script>
+/* ================= 頂部跑馬燈 — 獨立運作，沿用工作區共用授權伺服器的公告內容 ================= */
+(function () {
+  'use strict';
+  var MARQUEE_CHECK_URL = "https://script.google.com/macros/s/AKfycbwKX0DNNbY8y4nf90BFTHtxgfqJcHHcZasRrgycl4QAe52_hkjMWSkYk4xOsqU-JPCROw/exec";
+  var STORAGE_KEY = 'taiwanFestMarquee';
+  var REFRESH_MS = 20 * 60 * 1000;
+  var bar = document.getElementById('marqueeBar');
+  var track = document.getElementById('marqueeTrack');
+  var lastKey = null;
+  function loadCache() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch (e) { return []; } }
+  function saveCache(items) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (e) {} }
+  function appendParsedText(container, text) {
+    var re = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, lastIndex = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > lastIndex) container.appendChild(document.createTextNode(text.slice(lastIndex, m.index)));
+      var a = document.createElement('a');
+      a.href = m[2]; a.textContent = m[1]; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.style.color = 'inherit'; a.style.textDecoration = 'underline';
+      container.appendChild(a);
+      lastIndex = re.lastIndex;
+    }
+    if (lastIndex < text.length) container.appendChild(document.createTextNode(text.slice(lastIndex)));
+  }
+  function buildTrackContent(items) {
+    var frag = document.createDocumentFragment();
+    function appendPass() { items.forEach(function (item, idx) { if (idx > 0) frag.appendChild(document.createTextNode('　★　')); appendParsedText(frag, item); }); }
+    appendPass(); frag.appendChild(document.createTextNode('　★　')); appendPass();
+    return frag;
+  }
+  function render(items) {
+    if (!items || !items.length) return;
+    var key = JSON.stringify(items);
+    if (key === lastKey) return;
+    lastKey = key;
+    track.innerHTML = '';
+    track.appendChild(buildTrackContent(items));
+    bar.classList.add('show');
+    document.body.classList.add('has-marquee');
+    var width = track.scrollWidth / 2;
+    track.style.animationDuration = Math.max(width / 80, 10) + 's';
+  }
+  function fetchMarquee() {
+    fetch(MARQUEE_CHECK_URL, { method: 'POST', body: JSON.stringify({ serial: '' }) })
+      .then(function (r) { return r.json(); })
+      .then(function (data) { if (data && Array.isArray(data.marquee) && data.marquee.length) { saveCache(data.marquee); render(data.marquee); } })
+      .catch(function () {});
+  }
+  render(loadCache());
+  fetchMarquee();
+  setInterval(fetchMarquee, REFRESH_MS);
+})();
+</script>
+<script>
+/* ================= 加入主畫面（PWA） ================= */
+(function () {
+  'use strict';
+  var deferredPrompt = null;
+  var btn = document.getElementById('installBtn');
+  var ua = navigator.userAgent || '';
+  var isIOSDevice = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isMacDesktop = /Macintosh/.test(ua) && !isIOSDevice;
+  var isSafariEngine = /^((?!chrome|crios|fxios|edgios|android).)*safari/i.test(ua);
+  var isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  function fallbackMessage() {
+    if (isIOSDevice) return '請點畫面上的「分享」圖示，選「加入主畫面」';
+    if (isMacDesktop && isSafariEngine) return '請用選單列「檔案」→「加入 Dock」（Safari 17 以上）';
+    return '瀏覽器不支援，或已安裝過';
+  }
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferredPrompt = e; });
+  window.addEventListener('appinstalled', function () { deferredPrompt = null; });
+  function bindInstall(btn) {
+    if (isStandalone) { btn.style.display = 'none'; return; }
+    btn.addEventListener('click', function () {
+      if (!deferredPrompt) { window.alert(fallbackMessage()); return; }
+      try { deferredPrompt.prompt(); deferredPrompt.userChoice.then(function () { deferredPrompt = null; }); }
+      catch (err) { window.alert(fallbackMessage()); }
+    });
+  }
+  if (btn) bindInstall(btn);
+  document.querySelectorAll('[data-install]').forEach(bindInstall);
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('service-worker.js').catch(function () {}); });
+  }
+})();
+</script>
+</body>
+</html>

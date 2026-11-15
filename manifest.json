@@ -1,0 +1,31 @@
+{
+  "name": "台灣廟會節慶月曆",
+  "short_name": "廟會月曆",
+  "description": "3D 台灣廟會節慶月曆：拖動全年日期軸，看哪裡正在遶境、放炮、放天燈、放水燈；21 個廟會依農曆換算國曆，附日程與須知。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1f1410",
+  "theme_color": "#1f1410",
+  "lang": "zh-TW",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

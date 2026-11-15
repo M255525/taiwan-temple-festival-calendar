@@ -1,0 +1,18 @@
+// 由 tools/manual_tpl.html 產生 manual.html：node tools/build_manual.js . tools/manual_tpl.html
+const fs = require('fs'), path = require('path');
+const dir = process.argv[2], tplPath = process.argv[3];
+global.window = {};
+new Function(fs.readFileSync(path.join(dir, 'data.js'), 'utf8'))();
+const FC = window.FC;
+const e = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ys = []; for (let y = FC.YMIN; y <= FC.YMAX; y++) ys.push(y);
+const cell = (f, y) => { const o = FC.occ(f, y); if (!o || o.st === 'off' || o.s == null) return o && o.st === 'off' ? '—' : (o ? '待公告' : '—');
+  const t = FC.span(o); return (o.st === 'approx' ? '約 ' : '') + t + (o.st === 'pause' ? '（停辦）' : '') + (o.st === 'year' ? ' <span class="k" style="background:' + FC.STATUS.year.c + '">公告</span>' : ''); };
+const table = FC.FESTS.map(f => '<tr><td><b>' + e(f.name) + '</b><br><small>' + (f.lr ? '農曆' + FC.LMON[f.lr[0][0]] + (f.lr[0][1] < 0 ? '最後一天' : FC.LDAY[f.lr[0][1]]) : '日期每年公告') + '</small></td><td>' + e(f.temple) + '<br><small>' + e(f.city) + '</small></td>' + ys.map(y => '<td class="y">' + cell(f, y) + '</td>').join('') + '</tr>').join('\n');
+const status = Object.keys(FC.STATUS).map(k => '<span class="k" style="background:' + FC.STATUS[k].c + '">' + FC.STATUS[k].name + '</span>' + e(FC.STATUS[k].tip)).join('　');
+const etq = FC.ETIQUETTE.map(x => '<li><b>' + x.icon + ' ' + e(x.title) + '</b>：' + x.items.map(e).join(' ') + '</li>').join('');
+const sources = FC.FESTS.map(f => '<li>' + e(f.name) + '：' + f.src.map(s => '<a href="' + e(s[1]) + '" target="_blank" rel="noopener">' + e(s[0]) + '</a>').join('、') + '</li>').join('\n');
+let out = fs.readFileSync(tplPath, 'utf8').replace('{{YHEAD}}', ys.map(y => '<th>' + y + '</th>').join('')).replace('{{TABLE}}', table).replace('{{STATUS}}', status).replace('{{ETQ}}', etq).replace('{{SOURCES}}', sources).replace(/\{\{NF\}\}/g, FC.FESTS.length);
+if (/\{\{/.test(out)) throw new Error('template placeholder left');
+fs.writeFileSync(path.join(dir, 'manual.html'), out);
+console.log('manual ok', FC.FESTS.length);

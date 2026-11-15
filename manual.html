@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>台灣廟會節慶月曆・操作手冊</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--ink:#2b1d14;--ink2:#5a4636;--paper:#fbf3e2;--bg:#efe2c6;--line:#dcc79c;--red:#b3261e;--gold:#c9962e}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;--ink:#f3e6cf;--ink2:#d9c4a3;--paper:#2a1d16;--bg:#1a110c;--line:#5e4430;--red:#e8c35a}}
+:root[data-theme="dark"]{color-scheme:dark;--ink:#f3e6cf;--ink2:#d9c4a3;--paper:#2a1d16;--bg:#1a110c;--line:#5e4430;--red:#e8c35a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans TC',sans-serif;line-height:1.8}
+main{max-width:960px;margin:0 auto;padding:24px 16px 48px}
+h1{font-family:'Noto Serif TC',serif;font-size:30px;margin:0 0 4px;font-weight:900;color:#f6d77a;background:#1f1410;border:3px double var(--gold);border-radius:6px;padding:8px 16px}
+h2{font-family:'Noto Serif TC',serif;font-size:21px;margin:22px 0 8px;border-left:6px solid var(--red);padding-left:10px;font-weight:900;color:var(--red)}
+section{background:var(--paper);border:1.5px solid var(--line);border-top:5px solid var(--red);border-radius:4px;padding:6px 18px 14px;margin-top:14px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+td,th{border-bottom:1px solid var(--line);padding:5px 4px;text-align:left;vertical-align:top}
+td.y{white-space:nowrap}
+.k{display:inline-block;font-size:11px;color:#fff;border-radius:3px;padding:0 5px;margin-right:3px}
+a{color:#9a3a1a;word-break:break-all}
+p,li{color:var(--ink2)}
+</style>
+</head>
+<body>
+<main>
+<h1>台灣廟會節慶月曆・操作手冊</h1>
+<p><a href="index.html">← 回到廟會節慶月曆</a></p>
+
+<section>
+<h2>這是什麼</h2>
+<p>一張 3D 台灣廟會節慶月曆，回答「這天哪裡有廟會」「這個廟會今年是哪幾天」。下方的全年日期軸可以點、可以拖，長條是那天在辦的廟會數（淡黃色是日期還沒公告、只知道大約月份的期間），上方金色小字是農曆月份。收錄 21 個廟會節慶：媽祖進香遶境、神明遶境、炮與火、天燈、燈會、中元普渡、王船祭典、禮俗祭典，每個都附日程、參加須知與資料來源。</p>
+<p>舉辦期間，地圖上那座小廟的廟埕會發光，並出現對應的景物：進香神轎沿著示意路線前進、遶境隊伍繞廟、炮城火花、炸龍、天燈升空、燈會大燈、放水燈、孤棚與爬孤的人、普渡供桌、王船（送王當天燒王船）、香煙。</p>
+</section>
+
+<section>
+<h2>基本操作</h2>
+<ul>
+<li><b>換日期</b>：點或拖曳下方日期軸；◀ ▶ 換年份（2025～2029）；「今天」回到今天；▶ 一天一天自動播放。鍵盤 ← → 前後一天，Shift＋← → 一週，PageUp／PageDown 一個月。</li>
+<li><b>看廟會</b>：點地圖上的燈籠牌、右側清單，或用上方選單。詳細頁有今年日期（國曆＋農曆）、分日節目、2025～2029 各年日期、介紹、參加須知與資料來源；「看進香路線」會把鏡頭拉到整條示意路線。</li>
+<li><b>加到行事曆</b>：已公告或農曆固定的廟會可下載 .ics（全天事件，三天前提醒），匯入 Google 日曆、Outlook 或手機行事曆。</li>
+<li><b>分享</b>：網址會記住日期與選中的廟會（<code>#d=2026-08-26&amp;f=keelung</code>），按「分享」或直接複製網址。</li>
+<li><b>燈籠牌顏色</b>：紅點＝舉辦中、橘點＝30 天內、淡黃＝日期待公告的大約期間、灰＝還早或今年沒有。</li>
+</ul>
+</section>
+
+<section>
+<h2>日期怎麼算</h2>
+<ul>
+<li><b>農曆換國曆</b>：使用香港天文台「公曆與農曆日期對照表」整理 2025～2029 年每個農曆月的第一天（含 2025 閏六月、2028 閏五月）與二十四節氣，東八區計算，與中央氣象署曆書一致。<b>不使用瀏覽器內建的農曆</b>：它把 2027 年春節算成 2/7，官方是 2/6。</li>
+<li><b>四種標示</b>：<span class="k" style="background:#2f6f8f">農曆固定</span>每年同一個農曆日期，國曆依當年農曆換算。　<span class="k" style="background:#2f7d4a">已公告</span>主辦單位已公布今年的日期。　<span class="k" style="background:#b7791f">日期待公告</span>日期每年擲筊或擇日決定，色塊只是大約的月份。　<span class="k" style="background:#7d7468">今年停辦</span>主辦單位公告今年暫停主要活動。　<span class="k" style="background:#7d7468">今年沒有</span>這個祭典不是每年舉辦。</li>
+<li>「農曆固定」是依廟方慣例的農曆日期換算；許多祭典前後還有系列活動，實際節目以公告為準。學甲上白礁 2025 年起改在農曆三月十一日之前的週六，畫面會同時列出傳統日期。</li>
+<li>擲筊或擇日決定的祭典（大甲媽、白沙屯、東港迎王、西港刈香、台灣燈會、內門宋江陣），只有查到公告的年份才寫確切日期，其他年份只用淡色標出大約月份，不是預測。</li>
+</ul>
+</section>
+
+<section>
+<h2>2025～2029 日期總表</h2>
+<p>「約」＝日期待公告的大約期間；「—」＝那年沒有舉辦或還沒有資料。</p>
+<div class="tw"><table>
+<tr><th>廟會</th><th>主辦／地點</th><th>2025</th><th>2026</th><th>2027</th><th>2028</th><th>2029</th></tr>
+<tr><td><b>大甲媽祖遶境進香</b><br><small>日期每年公告</small></td><td>大甲鎮瀾宮<br><small>台中市大甲區</small></td><td class="y">約 3/29（六）～4/12（六）</td><td class="y">4/17（五）～4/26（日） <span class="k" style="background:#2f7d4a">公告</span></td><td class="y">約 4/7（三）～4/21（三）</td><td class="y">約 3/26（日）～4/9（日）</td><td class="y">約 4/14（六）～4/28（六）</td></tr>
+<tr><td><b>白沙屯媽祖進香</b><br><small>日期每年公告</small></td><td>白沙屯拱天宮<br><small>苗栗縣通霄鎮</small></td><td class="y">待公告</td><td class="y">4/12（日）～4/20（一） <span class="k" style="background:#2f7d4a">公告</span></td><td class="y">待公告</td><td class="y">待公告</td><td class="y">待公告</td></tr>
+<tr><td><b>北港朝天宮迎媽祖</b><br><small>農曆三月十九</small></td><td>北港朝天宮<br><small>雲林縣北港鎮</small></td><td class="y">4/16（三）～4/17（四）</td><td class="y">5/5（二）～5/6（三）</td><td class="y">4/25（日）～4/26（一）</td><td class="y">4/13（四）～4/14（五）</td><td class="y">5/2（三）～5/3（四）</td></tr>
+<tr><td><b>大龍峒保生文化祭</b><br><small>農曆三月十四</small></td><td>大龍峒保安宮<br><small>台北市大同區</small></td><td class="y">4/11（五）～4/12（六）</td><td class="y">4/30（四）～5/1（五）</td><td class="y">4/20（二）～4/21（三）</td><td class="y">4/8（六）～4/9（日）</td><td class="y">4/27（五）～4/28（六）</td></tr>
+<tr><td><b>學甲上白礁</b><br><small>農曆三月十一</small></td><td>學甲慈濟宮<br><small>台南市學甲區</small></td><td class="y">4/5（六）</td><td class="y">4/25（六）</td><td class="y">4/10（六）</td><td class="y">4/1（六）</td><td class="y">4/21（六）</td></tr>
+<tr><td><b>台北霞海城隍誕（五月十三迎城隍）</b><br><small>農曆五月十一</small></td><td>台北霞海城隍廟<br><small>台北市大同區（大稻埕）</small></td><td class="y">6/6（五）～6/8（日）</td><td class="y">6/25（四）～6/27（六）</td><td class="y">6/15（二）～6/17（四）</td><td class="y">6/3（六）～6/5（一）</td><td class="y">6/22（五）～6/24（日）</td></tr>
+<tr><td><b>艋舺青山王祭</b><br><small>農曆十月二十</small></td><td>艋舺青山宮<br><small>台北市萬華區</small></td><td class="y">12/9（二）～12/12（五）</td><td class="y">11/28（六）～12/1（二）</td><td class="y">11/17（三）～11/20（六）</td><td class="y">12/5（二）～12/8（五）</td><td class="y">11/25（日）～11/28（三）</td></tr>
+<tr><td><b>雞籠中元祭</b><br><small>農曆七月初一</small></td><td>老大公廟・主普壇<br><small>基隆市</small></td><td class="y">8/23（六）～9/22（一）</td><td class="y">8/13（四）～9/11（五）</td><td class="y">8/2（一）～9/1（三）</td><td class="y">8/20（日）～9/19（二）</td><td class="y">8/10（五）～9/8（六）</td></tr>
+<tr><td><b>恆春搶孤</b><br><small>農曆七月十五</small></td><td>恆春東門城外<br><small>屏東縣恆春鎮</small></td><td class="y">9/6（六）</td><td class="y">8/27（四）</td><td class="y">8/16（一）</td><td class="y">9/3（日）</td><td class="y">8/24（五）</td></tr>
+<tr><td><b>頭城搶孤</b><br><small>農曆七月最後一天</small></td><td>頭城開成寺・搶孤場<br><small>宜蘭縣頭城鎮</small></td><td class="y">9/21（日）</td><td class="y">9/10（四）（停辦）</td><td class="y">8/31（二）</td><td class="y">9/18（一）</td><td class="y">9/7（五）</td></tr>
+<tr><td><b>民雄大士爺文化祭</b><br><small>農曆七月廿一</small></td><td>民雄大士爺廟<br><small>嘉義縣民雄鄉</small></td><td class="y">9/12（五）～9/14（日）</td><td class="y">9/2（三）～9/4（五）</td><td class="y">8/22（日）～8/24（二）</td><td class="y">9/9（六）～9/11（一）</td><td class="y">8/30（四）～9/1（六）</td></tr>
+<tr><td><b>新埔義民祭</b><br><small>農曆七月二十</small></td><td>新埔褒忠義民廟<br><small>新竹縣新埔鎮</small></td><td class="y">9/11（四）</td><td class="y">9/1（二）</td><td class="y">8/21（六）</td><td class="y">9/8（五）</td><td class="y">8/29（三）</td></tr>
+<tr><td><b>鹽水蜂炮</b><br><small>農曆正月十四</small></td><td>鹽水武廟<br><small>台南市鹽水區</small></td><td class="y">2/11（二）～2/12（三）</td><td class="y">3/2（一）～3/3（二）</td><td class="y">2/19（五）～2/20（六）</td><td class="y">2/8（二）～2/9（三）</td><td class="y">2/26（一）～2/27（二）</td></tr>
+<tr><td><b>台東炮炸寒單爺</b><br><small>農曆正月十五</small></td><td>台東市玄武堂等宮廟<br><small>台東縣台東市</small></td><td class="y">2/12（三）</td><td class="y">3/3（二）</td><td class="y">2/20（六）</td><td class="y">2/9（三）</td><td class="y">2/27（二）</td></tr>
+<tr><td><b>平溪天燈節</b><br><small>農曆正月十五</small></td><td>十分・平溪<br><small>新北市平溪區</small></td><td class="y">2/12（三）</td><td class="y">3/3（二）</td><td class="y">2/20（六）</td><td class="y">2/9（三）</td><td class="y">2/27（二）</td></tr>
+<tr><td><b>苗栗火旁龍</b><br><small>農曆正月十五</small></td><td>苗栗市玉清宮<br><small>苗栗縣苗栗市</small></td><td class="y">2/12（三）～2/14（五）</td><td class="y">3/3（二）～3/5（四）</td><td class="y">2/20（六）～2/22（一）</td><td class="y">2/9（三）～2/11（五）</td><td class="y">2/27（二）～3/1（四）</td></tr>
+<tr><td><b>台灣燈會</b><br><small>日期每年公告</small></td><td>每年由不同縣市主辦<br><small>2026 嘉義縣</small></td><td class="y">約 2/12（三）～2/22（六）</td><td class="y">3/3（二）～3/15（日） <span class="k" style="background:#2f7d4a">公告</span></td><td class="y">約 2/20（六）～3/2（二）</td><td class="y">約 2/9（三）～2/19（六）</td><td class="y">約 2/27（二）～3/9（五）</td></tr>
+<tr><td><b>東港迎王平安祭典</b><br><small>日期每年公告</small></td><td>東港東隆宮<br><small>屏東縣東港鎮</small></td><td class="y">—</td><td class="y">—</td><td class="y">約 9/25（六）～10/4（一）</td><td class="y">—</td><td class="y">—</td></tr>
+<tr><td><b>西港刈香</b><br><small>日期每年公告</small></td><td>西港慶安宮<br><small>台南市西港區</small></td><td class="y">—</td><td class="y">—</td><td class="y">約 5/13（四）～5/25（二）</td><td class="y">—</td><td class="y">—</td></tr>
+<tr><td><b>台南七夕做十六歲</b><br><small>農曆七月初七</small></td><td>台南開隆宮<br><small>台南市中西區</small></td><td class="y">8/29（五）</td><td class="y">8/19（三）</td><td class="y">8/8（日）</td><td class="y">8/26（六）</td><td class="y">8/16（四）</td></tr>
+<tr><td><b>高雄內門宋江陣</b><br><small>日期每年公告</small></td><td>內門紫竹寺・南海紫竹寺<br><small>高雄市內門區</small></td><td class="y">約 2/28（五）～3/18（二）</td><td class="y">約 3/19（四）～4/6（一）</td><td class="y">約 3/8（一）～3/26（五）</td><td class="y">約 2/25（五）～3/14（二）</td><td class="y">約 3/15（四）～4/2（一）</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2>節慶須知（重點）</h2>
+<ul><li><b>🙏 尊重儀式</b>：神轎、陣頭經過時讓路，不要擋轎、穿越隊伍或觸碰神轎與法器。 拍照可以，但不要用閃光燈對著神像與轎班，暗訪時尤其要低調。 廟裡的供品、香爐、金紙不要亂動；想參拜就照廟方指示的順序。</li><li><b>🧨 炮火安全</b>：蜂炮、炸寒單、炸龍、炸轎一定要全罩安全帽、護目鏡、耳塞、厚長袖與手套。 不要穿合成纖維衣物，鞋子要包腳；孕婦、小孩、長輩與心臟病患不建議靠近。 炮城點燃後不要撿地上的未爆炮。</li><li><b>🚶 跟隨遶境</b>：跟隨進香可以只走一段，夜間走路穿反光衣、帶頭燈。 沿途信眾提供的食物飲水是心意，拿多少吃多少，不要浪費。 垃圾自己帶走，不要踩進田裡或私人土地。</li><li><b>🕯 中元時節</b>：普渡供品放在指定區域，祭拜完請收拾乾淨。 放水燈、搶孤都在夜裡，注意海邊與人潮安全。 民俗禁忌是文化的一部分，可以了解，但不需要害怕。</li><li><b>🚌 交通與人潮</b>：大型祭典周邊交通管制，盡量搭大眾運輸或接駁車。 人多的地方背包背前面，和同行的人約好走散時的集合點。 天氣熱時帶水、帽子；颱風或豪雨時活動可能延期，以主辦單位公告為準。</li><li><b>📅 日期怎麼看</b>：「農曆固定」的祭典每年同一個農曆日子，國曆每年不同。 「日期待公告」的祭典要等擲筊或擇日，這張月曆只用淡色標出大約的月份。 「三年一科」的祭典（東港迎王、西港刈香）只在丑、辰、未、戌年舉辦。</li></ul>
+</section>
+
+<section id="sources">
+<h2>資料來源</h2>
+<ul>
+<li>農曆與節氣：香港天文台「公曆與農曆日期對照表」（2025～2029 年，<a href="https://www.hko.gov.hk/tc/gts/time/conversion.htm" target="_blank" rel="noopener">hko.gov.hk</a>）。</li>
+<li>大甲媽祖遶境進香：<a href="https://udn.com/news/story/7325/9357126" target="_blank" rel="noopener">大甲鎮瀾宮 2026 遶境起駕（聯合新聞網）</a></li>
+<li>白沙屯媽祖進香：<a href="https://www.businesstoday.com.tw/article/category/183030/post/202603060037/" target="_blank" rel="noopener">2026 白沙屯媽祖進香 4/12 起駕（今周刊）</a></li>
+<li>北港朝天宮迎媽祖：<a href="https://taiwangods.moi.gov.tw/html/landscape/1_0011.aspx?i=57" target="_blank" rel="noopener">臺灣宗教百景：北港朝天宮迎媽祖（內政部）</a>、<a href="https://news.ltn.com.tw/news/life/breakingnews/5416371" target="_blank" rel="noopener">北港迎媽祖 5/5、5/6 登場（自由時報）</a></li>
+<li>大龍峒保生文化祭：<a href="https://www.cna.com.tw/news/acul/202604150163.aspx" target="_blank" rel="noopener">北市大龍峒保安宮保生文化祭（中央社）</a></li>
+<li>學甲上白礁：<a href="https://news.ltn.com.tw/news/life/breakingnews/4999749" target="_blank" rel="noopener">學甲上白礁首次改變舉辦時間（自由時報）</a></li>
+<li>台北霞海城隍誕（五月十三迎城隍）：<a href="https://baodao.setn.com/news/1868008" target="_blank" rel="noopener">五月十三人看人：台北迎城隍（三立）</a></li>
+<li>艋舺青山王祭：<a href="https://taiwangods.moi.gov.tw/html/cultural/3_0011.aspx?i=81" target="_blank" rel="noopener">臺灣宗教文化地圖：艋舺青山宮暗訪暨遶境（內政部）</a>、<a href="https://whdo.gov.taipei/cp.aspx?n=01FC6C90885205F5" target="_blank" rel="noopener">萬華區公所：青山王祭簡介</a></li>
+<li>雞籠中元祭：<a href="https://zh.wikipedia.org/zh-tw/%E9%9B%9E%E7%B1%A0%E4%B8%AD%E5%85%83%E7%A5%AD" target="_blank" rel="noopener">雞籠中元祭（維基百科）</a>、<a href="https://news.ltn.com.tw/news/local/paper/1093608" target="_blank" rel="noopener">放水燈維持農曆七月十四日（自由時報）</a></li>
+<li>恆春搶孤：<a href="https://news.ltn.com.tw/news/life/breakingnews/5169425" target="_blank" rel="noopener">恆春中元豎孤棚開戰（自由時報）</a></li>
+<li>頭城搶孤：<a href="https://www.thenewslens.com/article/140002" target="_blank" rel="noopener">頭城與恆春搶孤的異同（關鍵評論網）</a>、<a href="https://www.lym.gov.tw/ch/collection/epaper/epaper-detail/5682d2a0-c43f-11eb-92da-2760f1289ae7/" target="_blank" rel="noopener">蘭陽博物館：頭城中元與搶孤</a></li>
+<li>民雄大士爺文化祭：<a href="https://www.nownews.com/news/6869374" target="_blank" rel="noopener">全台六大中元祭典（NOWnews）</a></li>
+<li>新埔義民祭：<a href="https://religion.moi.gov.tw/Knowledge/Content?ci=2&amp;cid=13" target="_blank" rel="noopener">全國宗教資訊網：義民節（內政部）</a>、<a href="https://hakkanews.tw/2025/09/11/228061/" target="_blank" rel="noopener">義民祭創新紀元（客新聞）</a></li>
+<li>鹽水蜂炮：<a href="https://www.yanshui.com.tw/custom_76284.html" target="_blank" rel="noopener">2027 鹽水蜂炮（鹽水漫遊網）</a>、<a href="https://www.taiwanfolk.com/ceremony/detail/45" target="_blank" rel="noopener">台灣元宵三大慶典：鹽水蜂炮（台灣文民）</a></li>
+<li>台東炮炸寒單爺：<a href="https://e-info.org.tw/node/63685" target="_blank" rel="noopener">元宵習俗：天燈、烽炮與炸寒單爺（環境資訊中心）</a></li>
+<li>平溪天燈節：<a href="https://news.ltn.com.tw/news/life/paper/1565288" target="_blank" rel="noopener">各地慶元宵：平溪天燈今接力（自由時報）</a></li>
+<li>苗栗火旁龍：<a href="https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Invisible&amp;id=616411" target="_blank" rel="noopener">國家文化記憶庫：苗栗火旁龍六大階段</a>、<a href="https://taiwangods.moi.gov.tw/html/landscape/1_0011.aspx?i=35" target="_blank" rel="noopener">臺灣宗教百景：玉清宮苗栗火旁龍（內政部）</a></li>
+<li>台灣燈會：<a href="https://www.motc.gov.tw/ch/app/data/view?module=news&amp;id=14&amp;serno=341849c6-7b19-46c1-9b1a-dcba678193df" target="_blank" rel="noopener">交通部：2026、2027 台灣燈會舉辦縣市</a>、<a href="https://www.businessweekly.com.tw/style/blog/3020351" target="_blank" rel="noopener">2026 台灣燈會在嘉義（商業周刊）</a></li>
+<li>東港迎王平安祭典：<a href="https://taiwangods.moi.gov.tw/html/landscape/1_0011.aspx?i=90" target="_blank" rel="noopener">臺灣宗教百景：東港迎王平安祭典（內政部）</a>、<a href="https://zh.wikipedia.org/wiki/%E6%9D%B1%E6%B8%AF%E8%BF%8E%E7%8E%8B%E5%B9%B3%E5%AE%89%E7%A5%AD%E5%85%B8" target="_blank" rel="noopener">東港迎王（維基百科）</a></li>
+<li>西港刈香：<a href="https://nchdb.boch.gov.tw/assets/overview/folklore/20090217000006" target="_blank" rel="noopener">西港刈香（國家文化資產網）</a>、<a href="https://taiwangods.moi.gov.tw/html/landscape/1_0011.aspx?i=83" target="_blank" rel="noopener">臺灣宗教百景：西港刈香（內政部）</a></li>
+<li>台南七夕做十六歲：<a href="https://www.twtainan.net/zh-tw/attractions/detail/4318/" target="_blank" rel="noopener">開隆宮（台南旅遊網）</a>、<a href="https://zh.wikipedia.org/wiki/%E9%96%8B%E9%9A%86%E5%AE%AE" target="_blank" rel="noopener">開隆宮（維基百科）</a></li>
+<li>高雄內門宋江陣：<a href="https://nvns.net/news_view.php?new_sn=122366&amp;new_csn=1470" target="_blank" rel="noopener">2026 高雄內門宋江陣開幕</a></li>
+<li>全台民俗節日（天公生、土地公生、關聖帝君聖誕等）採常見民間說法，各地各廟可能另有慶典日。</li>
+<li>台灣與離島輪廓、山脈地形：沿用作者「台灣賞鳥地圖」的手描簡化圖；廟宇外觀、進香路線、景物皆為示意。</li>
+<li>所有介紹、日程說明與須知皆為自行撰寫，2026-11 整理。</li>
+</ul>
+</section>
+
+<section id="creator">
+<h2>創作者</h2>
+<div class="mk-creator">
+<style>.mk-creator{line-height:1.75}.mk-creator h3{margin:14px 0 6px;font-size:1.05em}.mk-creator table{width:100%;border-collapse:collapse;font-size:.95em}.mk-creator td,.mk-creator th{text-align:left;padding:5px 6px;border-bottom:1px solid rgba(128,128,128,.3);vertical-align:top}.mk-creator th{white-space:nowrap}.mk-creator ul{margin:4px 0;padding-left:1.4em}.mk-creator .mk-tags{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0}.mk-creator .mk-tags span{border:1px solid rgba(128,128,128,.45);border-radius:999px;padding:1px 10px;font-size:.9em}</style>
+<p><b>Mark Tsai（蔡豐全）</b>為深耕創業輔導與數位轉型領域的顧問與講師，長期擔任勞動力發展署創業顧問與多項政府計畫的顧問、業師與評審委員，協助中小企業導入數據分析與 AI 工具、申請政府補助計畫，並具備跨境電商實務與講師培訓的豐富經驗。本工具是其推廣 AI 工具運用於教學與課程情境的作品之一。</p>
+<p>聯絡信箱：<a href="mailto:tsaimark@gmail.com">tsaimark@gmail.com</a></p>
+<h3>專長</h3>
+<div class="mk-tags"><span>銷售數據分析</span><span>AI 工具運用</span><span>政府補助計畫申請</span><span>創業</span><span>跨境電商</span></div>
+<h3>證照</h3>
+<table>
+<thead><tr><th>年度</th><th>證照</th></tr></thead>
+<tbody>
+<tr><td>2013</td><td>青創總會 創業輔導顧問師班</td></tr>
+<tr><td>2014</td><td>青創總會 網路行銷講師培訓班</td></tr>
+<tr><td>2016</td><td>阿里巴巴 P4P 認證講師</td></tr>
+<tr><td>2017</td><td>iCap 訓練規劃與評量職能基準課程</td></tr>
+<tr><td>2023</td><td>iCap 職能導向課程申請認證實作班</td></tr>
+<tr><td>2025</td><td>iPAS AI 應用規劃師－初級</td></tr>
+<tr><td>2025</td><td>新北市社會局 社區數位陪伴員</td></tr>
+</tbody>
+</table>
+<h3>經歷</h3>
+<ul>
+<li>勞動力發展署桃竹苗分署 創業顧問（2017－迄今）</li>
+<li>勞動力發展署（北北基）小型企業人力提升計畫 顧問（2019－迄今）</li>
+<li>勞動力發展署（桃竹苗）小型企業人力提升計畫 顧問（2019－迄今）</li>
+<li>農業部農業科技司「科技農企業雙軸轉型躍升發展」科技計畫 業師（2025－2026）</li>
+<li>勞動力發展署 企業人力資源提升計畫 審查委員（2024）</li>
+<li>勞動力發展署 職前訓練評鑑計畫 委員（2022）</li>
+<li>勞動部桃竹苗分署 桃竹苗區域運籌人力資源整合服務計畫 顧問（2022－2023）</li>
+<li>經濟部中小企業處 SBIR 海選專案 評審委員（2019－2024）</li>
+<li>勞動力發展署 數位學習課程清單審查會議 審查委員（2024－2025）</li>
+<li>輔仁大學創新跨領域學院 課務委員（2024－2025）</li>
+<li>台北市進出口商業同業公會 跨境電商生態村 顧問</li>
+<li>台灣網商協會 顧問</li>
+<li>中華職能開發策進會 顧問（2018－2020）</li>
+<li>新北市汽車美容人員職業工會 顧問（2023－迄今）</li>
+<li>中華網路行銷講師協會 顧問（2022－迄今）</li>
+<li>新北市社企電商基地 輔導顧問（2018－2020）</li>
+<li>阿里巴巴國際站平台 認證講師（2016）</li>
+<li>巨匠電腦 跨境電子商務班 講師（2016－2017）</li>
+</ul>
+</div>
+</section>
+</main>
+</body>
+</html>

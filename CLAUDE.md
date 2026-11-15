@@ -21,8 +21,9 @@
 ## 配套
 - ✅ 跑馬燈（`taiwanFestMarquee`）、manual（含完整創作者）、使用警語（底部＋首訪自動跳，`taiwanFestSeenWarning`）、⚙常用設定收合式（`taiwanFestSettings`；展開 `taiwanFestSetOpen`）、偏好 `taiwanFestPrefs`、PWA（`tools/make_icons.py` 畫燈籠；改 js 記得 `CACHE_NAME` +1）、訪客計數器 `page_id=m255525.taiwantemplefestival`、RWD（375px 無橫向捲動）。
 - ❌ 序號授權
+- GitHub Pages（**2026-11-15 已上線**）：`master`＋`.github/workflows/deploy-pages.yml`，https://m255525.github.io/taiwan-temple-festival-calendar/ （repo 由使用者自己 `gh repo create`，Pages 由 Claude 用 `gh api` 開啟，push 觸發的部署直接成功）。程式牆在 `REPO_META`，github-dashboard 已補。
 
 ## Port／測試
 - port **8886**（`.claude/launch.json` 的 `taiwan-temple-festival-calendar`）。
-- `python tools/e2e_fest.py <截圖資料夾>`（先開 8886；`FEST_BASE` 可測線上版）：首訪警語、21 座廟、4/18 大甲＋白沙屯在辦、農曆顯示、大甲 2026 已公告、雞籠中元祭 8/26 放水燈、2027 元宵四個同時在辦、東港 2027 大約／2026 沒有、學甲傳統日期、.ics、分享網址還原、日期軸點選、換年、須知與設定、375px。2026-11-15 本機全過、無 console 錯誤。
+- `python tools/e2e_fest.py <截圖資料夾>`（先開 8886；`FEST_BASE` 可測線上版）：首訪警語、21 座廟、4/18 大甲＋白沙屯在辦、農曆顯示、大甲 2026 已公告、雞籠中元祭 8/26 放水燈、2027 元宵四個同時在辦、東港 2027 大約／2026 沒有、學甲傳統日期、.ics、分享網址還原、日期軸點選、換年、須知與設定、375px。2026-11-15 本機全過、無 console 錯誤；上線後設 `FEST_BASE` 對線上版再跑一輪全過（線上載入較慢，`goto` 用 `wait_until='domcontentloaded'`）。
 - 驗證過的換算：2027-02-06＝正月初一、2027-02-20＝元宵、2026-04-17＝三月初一、2026-08-26＝七月十四、2026-11-28＝十月二十、2025-07-25＝閏六月初一；恆春搶孤 2026 8/27、2027 8/16，北港 2026 5/5–6，鹽水 2027 2/19–20 都與公開資料一致。

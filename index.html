@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>台灣廟會節慶月曆</title>
-<meta name="description" content="3D 台灣廟會節慶月曆：拖動全年日期軸，看哪裡正在遶境、放炮、放天燈、放水燈。21 個廟會節慶依農曆換算國曆（2025～2029），大甲媽、白沙屯、鹽水蜂炮、雞籠中元祭、東港迎王、西港刈香…附日程、須知與資料來源。">
+<meta name="description" content="3D 台灣廟會節慶月曆：拖動全年日期軸，看哪裡正在遶境、放炮、放天燈、放水燈。21 個廟會節慶依農曆換算國曆（2025～2029），另有 24 座廟宇深度導覽圖錄，大甲媽、白沙屯、鹽水蜂炮、雞籠中元祭、東港迎王、西港刈香…附日程、須知與資料來源。">
 <meta name="theme-color" content="#1f1410">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icons/favicon.png">
@@ -239,6 +239,66 @@ button.chip2:hover,a.chip2:hover{border-color:var(--red);color:var(--red)}
   .etq{grid-template-columns:1fr}
   .modal{padding:8px;padding-top:calc(8px + var(--mq))}
 }
+
+/* ===== 廟宇深度導覽圖錄 ===== */
+#guide .sheet{width:min(1060px,100%)}
+.tg-tabs{display:flex;gap:6px;margin:0 0 12px;border-bottom:2px solid var(--line)}
+.tg-tab{border:1.5px solid var(--line);border-bottom:0;background:var(--paper2);border-radius:6px 6px 0 0;padding:6px 14px;font-weight:700;font-family:var(--serif);font-size:15px;margin-bottom:-2px}
+.tg-tab.on{background:var(--paper);border-color:var(--red);color:var(--red);box-shadow:inset 0 3px 0 var(--red)}
+:root[data-theme="dark"] .tg-tab.on{color:var(--gold2)}
+.tg-filter{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:10px;font-size:13px}
+.tg-filter select,.tg-filter input[type=search]{font:inherit;font-size:13.5px;padding:5px 8px;border-radius:4px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
+.tg-filter input[type=search]{flex:1;min-width:140px}
+.tg-filter label{display:flex;align-items:center;gap:4px;white-space:nowrap}
+#tgCount{color:var(--mute);margin-left:auto}
+#tgGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.tg-card{border:1.5px solid var(--line);background:var(--paper);border-radius:4px;padding:6px 8px 9px;text-align:left;display:flex;flex-direction:column;gap:2px;border-top:4px solid var(--red)}
+.tg-card:hover,.tg-card:focus-visible{border-color:var(--red);box-shadow:0 4px 12px rgba(90,30,10,.18)}
+.tg-card .fac{width:100%;height:auto;aspect-ratio:240/150;border-radius:3px;background:linear-gradient(180deg,#f6d7a8,#f9ead0)}
+.tg-card b{font-family:var(--serif);font-size:16px;font-weight:900}
+.tg-card small{font-size:12px;color:var(--mute)}
+.tg-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.tg-h{font-size:11px;font-weight:700;color:#fff;border-radius:3px;padding:0 6px}
+.tg-f,.tg-g{font-size:11px;border-radius:999px;padding:0 7px;background:var(--paper2);border:1px solid var(--line);color:var(--ink2)}
+.tg-empty{color:var(--mute)}
+.tg-nav{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tg-dwrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;align-items:start}
+.tg-dfig .fac{width:100%;height:auto;border:3px double var(--gold);border-radius:4px;background:linear-gradient(180deg,#f0b07a,#f9ead0)}
+.tg-dfig small,.tg-fig small{display:block;font-size:11.5px;color:var(--mute);margin-top:3px;text-align:center}
+.tg-dinfo h3{margin:0;font-family:var(--serif);font-weight:900;font-size:26px;color:var(--red)}
+:root[data-theme="dark"] .tg-dinfo h3{color:var(--gold2)}
+.tg-dinfo dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:10px 0 6px;font-size:13.5px}
+.tg-dinfo dt{font-weight:700;color:var(--red)}
+.tg-dinfo dd{margin:0;color:var(--ink2)}
+.tg-dinfo p{font-size:14px;line-height:1.8;color:var(--ink2);margin:6px 0}
+.tg-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.tg-cols section{border:1.5px solid var(--line);border-left:4px solid var(--red);border-radius:3px;padding:8px 12px;background:var(--paper)}
+#guide h4{font-family:var(--serif);font-size:17px;margin:14px 0 6px}
+.tg-cols h4{margin:0 0 4px!important}
+.tg-look{margin:0;padding-left:20px;font-size:13.5px;line-height:1.7;color:var(--ink2)}
+.tg-route{list-style:none;margin:0;padding:0;counter-reset:rt;font-size:13.5px}
+.tg-route li{counter-increment:rt;position:relative;padding:3px 0 10px 32px;color:var(--ink2)}
+.tg-route li::before{content:counter(rt);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff3d6;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.tg-route li:not(:last-child)::after{content:'';position:absolute;left:10.5px;top:24px;bottom:0;border-left:2px dotted var(--red)}
+.tg-lead{font-size:14px;color:var(--ink2);margin:0 0 10px}
+.tg-anat{display:grid;grid-template-columns:1.25fr .95fr .9fr;gap:12px;align-items:start}
+.tg-fig svg{width:100%;height:auto;border:1.5px solid var(--line);border-radius:4px;background:linear-gradient(180deg,#f0b07a,#f9ead0)}
+.hot{cursor:pointer}
+.hot circle{fill:#1f1410;stroke:#e8c35a;stroke-width:1.2;opacity:.9}
+.hot text{fill:#e8c35a;font-size:7.5px;font-weight:900;pointer-events:none;font-family:var(--font)}
+.plan .hot text{font-size:8.5px}
+.hot:hover circle,.hot.on circle,.hot:focus circle{fill:#d6372e;opacity:1}
+.hot:focus{outline:none}
+.tg-part{border:1.5px solid var(--red);border-radius:4px;background:var(--wash);padding:10px 12px;font-size:14px;line-height:1.7;min-height:120px}
+.tg-part b{display:block;font-family:var(--serif);font-size:19px;color:var(--red)}
+:root[data-theme="dark"] .tg-part b{color:var(--gold2)}
+.tg-part span{color:var(--ink2)}
+.tg-gl div{cursor:pointer}
+.tg-gl div.on{background:var(--wash);border-left-color:var(--red)}
+.tg-visit{margin:0;padding-left:22px;font-size:13.5px;line-height:1.8;color:var(--ink2)}
+.plab.tpin{background:var(--gold2);color:#4a0f0b;border-color:#4a0f0b;font-size:14px;box-shadow:0 2px 0 #4a0f0b,0 0 12px 3px rgba(232,195,90,.8)}
+@media (max-width:900px){ .tg-anat{grid-template-columns:1fr 1fr} .tg-part{grid-column:1/-1;min-height:0} }
+@media (max-width:760px){ .tg-dwrap,.tg-cols,.tg-anat{grid-template-columns:1fr} #tgGrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))} .tg-tab{padding:5px 9px;font-size:14px} .tg-dinfo h3{font-size:22px} }
 @media (prefers-reduced-motion: reduce){ #loading svg .bw{animation:none} #marqueeTrack{animation:none} }
 </style>
 </head>
@@ -288,7 +348,8 @@ button.chip2:hover,a.chip2:hover{border-color:var(--red);color:var(--red)}
 
 <div id="tools" class="ui">
   <button class="tbtn" id="btnAll" type="button">🗺 看全台灣</button>
-  <button class="tbtn hl" id="btnEtq" type="button">🙏 節慶須知</button>
+  <button class="tbtn hl" id="btnGuide" type="button" data-open-guide>🏯 廟宇圖錄</button>
+  <button class="tbtn" id="btnEtq" type="button">🙏 節慶須知</button>
   <button class="tbtn" id="btnSet" type="button">⚙ 常用設定</button>
   <button class="tbtn" id="installBtn" type="button">📲 加入主畫面</button>
   <button class="tbtn" id="btnAbout" type="button">⚠ 使用警語</button>
@@ -349,6 +410,7 @@ button.chip2:hover,a.chip2:hover{border-color:var(--red);color:var(--red)}
           <button class="chip2" type="button" data-open-about="creator">👤 創作者資訊</button>
           <button class="chip2" type="button" data-install>📲 加入主畫面</button>
           <button class="chip2" type="button" data-open-etq>🙏 節慶須知</button>
+          <button class="chip2" type="button" data-open-guide>🏯 廟宇深度導覽圖錄</button>
         </div>
         <p style="font-size:12px;color:var(--mute);margin:10px 0 0;display:flex;align-items:center;gap:8px">訪客數 <img src="https://visitor-badge.laobi.icu/badge?page_id=m255525.taiwantemplefestival" alt="訪客次數" height="20"></p>
       </div></details>
@@ -381,9 +443,35 @@ button.chip2:hover,a.chip2:hover{border-color:var(--red);color:var(--red)}
     </div>
   </div>
 </div>
+<div id="guide" class="modal pad" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+  <div class="sheet">
+    <button class="x" type="button" data-close aria-label="關閉">✕</button>
+    <h2 id="guideTitle">🏯 台灣廟宇深度導覽圖錄</h2>
+    <div class="tg-tabs" role="tablist">
+      <button type="button" class="tg-tab on" data-tab="list" role="tab">📜 廟宇圖錄</button>
+      <button type="button" class="tg-tab" data-tab="intro" role="tab">🔍 看廟入門</button>
+    </div>
+    <div id="tgListPane">
+      <div class="tg-filter">
+        <select id="tgRegion" aria-label="地區"></select>
+        <select id="tgGod" aria-label="主祀神明"></select>
+        <label><input type="checkbox" id="tgHerit"> 只看古蹟</label>
+        <label><input type="checkbox" id="tgFest"> 有收錄廟會</label>
+        <input type="search" id="tgQ" placeholder="搜尋廟名、神明、看點…" aria-label="搜尋">
+        <span id="tgCount"></span>
+      </div>
+      <div id="tgGrid"></div>
+      <p class="src">立面圖都是程式繪製的示意（依門數、是否重簷、燕尾脊或馬背），不是實際外觀；古蹟等級依文化部國家文化資產網與內政部臺灣宗教文化地圖整理，查不到確定等級的不標示。</p>
+    </div>
+    <div id="tgDetail" hidden></div>
+    <div id="tgIntro" hidden></div>
+  </div>
+</div>
 <div id="toast" hidden></div>
 
 <script src="data.js"></script>
+<script src="temples.js"></script>
+<script src="guide.js"></script>
 <script src="scene.js"></script>
 <script src="app.js"></script>
 <script>

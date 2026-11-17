@@ -512,6 +512,24 @@ S.focusRoute = function(id){
   var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs), z0 = Math.min.apply(null, zs), z1 = Math.max.apply(null, zs);
   S.flyTo((x0 + x1) / 2, (z0 + z1) / 2, Math.max(8, Math.max(x1 - x0, z1 - z0) * 1.6 + 4) * aspectK(), .85);
 };
+/* ---------- 廟宇圖錄：在地圖上標出一座廟（金色箭頭＋小廟，同時只有一個） ---------- */
+var pinG = null, pinL = null;
+S.pinTemple = function(lon, lat, name){
+  if (!S.ready) return;
+  if (lon == null){ if (pinG){ pinG.visible = false; pinL.active = false; } return; }
+  if (!pinG){
+    pinG = new T.Group(); var tp = temple(); tp.scale.setScalar(1.4); pinG.add(tp);
+    var mk = new T.Mesh(cone(.07, .18, 4), MB('#e8c35a')); mk.rotation.x = Math.PI; mk.position.y = .72; pinG.add(mk); pinG.userData.mk = mk;
+    scene.add(pinG);
+    var el = document.createElement('div'); el.className = 'plab tpin';
+    pinL = addLabel(el, new T.Vector3(), 9, 'pin', {boost:20});
+  }
+  var q = P(lon, lat), y = landY(q[0], q[1]);
+  pinG.position.set(q[0], y, q[1]); pinG.visible = true;
+  pinL.el.innerHTML = '<span>🏯 ' + String(name).replace(/[<>&]/g, '') + '</span>'; pinL.pos.set(q[0], y + .95, q[1]); pinL.w = 0; pinL.active = true;
+  S.flyTo(q[0], q[1], 5 * aspectK(), .9, 1.3, y + .3);
+};
+S.pinInfo = function(){ return pinG && pinG.visible ? {x:pinG.position.x, z:pinG.position.z} : null; };
 /* ---------- 對外 ---------- */
 S.setDay = function(n){ curDay = n; if (S.ready) applyDay(); };
 S.selectSpot = function(id){ selId = id || null; if (S.ready) applyDay(); };
@@ -595,6 +613,7 @@ function loop(){
   }
   controls.update();
   FC.FESTS.forEach(function(f, i){ animFest(SPOT3[f.id], t, i); });
+  if (pinG && pinG.visible) pinG.userData.mk.position.y = .72 + (reduce ? 0 : Math.sin(t * 3) * .05);
   clouds.forEach(function(C){ C.g.position.x += dt * C.v * (reduce ? .3 : 1); if (C.g.position.x > EXT.x1 + 20) C.g.position.x = EXT.x0 - 20; });
   renderer.render(scene, camera);
   layoutLabels();

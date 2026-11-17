@@ -126,6 +126,7 @@ function render(opts){
       '<b>' + (show.st === 'approx' ? '大約 ' : '') + (sy !== Y ? sy + ' 年 ' : '') + FC.span(show) + '</b><small>' + esc(lunarSpan(show)) + '</small>' +
       (show.trad ? '<small>傳統日期：' + FC.fmt(show.trad, true) + '（農曆三月十一）；2025 年起改在之前的週六</small>' : '') +
       (show.st === 'approx' ? '<small>' + esc(f.tbd) + '</small>' : '') + '</div>';
+    var tp = (FC.TEMPLES || []).filter(function(x){ return x.fest === f.id; })[0];
     var note = show && show.note ? show.note : (o && o.note) || '';
     place.innerHTML = '<h2>' + esc(f.name) + '<small>' + esc(f.temple) + '・' + esc(FC.city(f, sy)) + '</small></h2>' +
       '<div class="meta">' + (show ? stChip(show.st) : '') + typeChip(f) + '</div>' + whenH +
@@ -134,7 +135,7 @@ function render(opts){
       yearStrip(f) +
       '<p>' + esc(f.desc) + '</p>' +
       '<details class="tips"' + (innerWidth > 760 ? ' open' : '') + '><summary>📌 參加須知</summary><ul>' + f.tips.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></details>' +
-      '<div class="acts">' + (show && show.s != null && show.st !== 'approx' ? '<button type="button" class="abtn" id="btnIcs">📅 加到行事曆</button>' : '') + '<button type="button" class="abtn" id="btnShare">🔗 分享</button>' + (f.route ? '<button type="button" class="abtn" id="btnRoute">🗺 看進香路線（示意）</button>' : '') + '</div>' +
+      '<div class="acts">' + (show && show.s != null && show.st !== 'approx' ? '<button type="button" class="abtn" id="btnIcs">📅 加到行事曆</button>' : '') + '<button type="button" class="abtn" id="btnShare">🔗 分享</button>' + (f.route ? '<button type="button" class="abtn" id="btnRoute">🗺 看進香路線（示意）</button>' : '') + (tp ? '<button type="button" class="abtn" id="btnTemple">🏯 ' + esc(tp.name) + '導覽</button>' : '') + '</div>' +
       '<div class="src">資料來源：' + f.src.map(function(s){ return '<a href="' + esc(s[1]) + '" target="_blank" rel="noopener">' + esc(s[0]) + '</a>'; }).join('、') + '</div>';
     $('sum').innerHTML = '<span>' + t.m + '/' + t.d + '・' + (L ? '農曆' + L.text : '') + '</span>' + (holy.length ? '<span>・' + esc(holy.join('、')) + '</span>' : '');
     list.innerHTML = '<div class="lgrp">同一區的其他廟會</div>' + FC.FESTS.filter(function(x){ return x.r === f.r && x !== f; }).map(festCard).join('');
@@ -158,6 +159,7 @@ function render(opts){
     FestScene.setDay(n); FestScene.selectSpot(st.fest);
     FestScene.setHorizon([.98, .85, .7]);
     if (opts.fly){
+      FestScene.pinTemple(null);
       if (f) FestScene.focusSpot(f.id);
       else if (st.region !== 'all') FestScene.focusRegion(FC.FESTS.filter(inScope).map(function(x){ return x.id; }));
       else FestScene.overview();
@@ -239,6 +241,7 @@ function bind(){
     var s = e.target.closest('[data-fest]'); if (s){ selectFest(s.dataset.fest); return; }
     if (e.target.id === 'btnIcs'){ var ic = buildIcs(FC.festById[st.fest]); if (!ic) return; var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ic.text], {type:'text/calendar'})); a.download = ic.name; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 800); toast('已下載 ' + ic.name); }
     if (e.target.id === 'btnShare') share();
+    if (e.target.id === 'btnTemple' && window.TempleGuide){ var tq = FC.TEMPLES.filter(function(x){ return x.fest === st.fest; })[0]; if (tq) TempleGuide.open(tq.id); }
     if (e.target.id === 'btnRoute' && window.FestScene) FestScene.focusRoute(st.fest);
   });
   $('btnAll').addEventListener('click', function(){ st.region = 'all'; st.fest = null; fillSelectors(); render({fly:true}); });
@@ -292,5 +295,5 @@ FestScene.init({host:$('stage'), labels:$('labels'), reduce:reduceOn(), day:st.d
   $('loading').addEventListener('click', function(){ $('loading').classList.add('hide'); firstVisit(); }, {once:true});
 });
 
-window.__fest = {state:st, setDay:setDay, selectFest:selectFest, selectRegion:selectRegion, shiftYear:shiftYear, buildIcs:buildIcs, shareUrl:shareUrl, FC:FC, scene:FestScene};
+window.__fest = {toast:toast, state:st, setDay:setDay, selectFest:selectFest, selectRegion:selectRegion, shiftYear:shiftYear, buildIcs:buildIcs, shareUrl:shareUrl, FC:FC, scene:FestScene};
 })();

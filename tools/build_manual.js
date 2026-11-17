@@ -3,6 +3,7 @@ const fs = require('fs'), path = require('path');
 const dir = process.argv[2], tplPath = process.argv[3];
 global.window = {};
 new Function(fs.readFileSync(path.join(dir, 'data.js'), 'utf8'))();
+new Function(fs.readFileSync(path.join(dir, 'temples.js'), 'utf8'))();
 const FC = window.FC;
 const e = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ys = []; for (let y = FC.YMIN; y <= FC.YMAX; y++) ys.push(y);
@@ -13,6 +14,9 @@ const status = Object.keys(FC.STATUS).map(k => '<span class="k" style="backgroun
 const etq = FC.ETIQUETTE.map(x => '<li><b>' + x.icon + ' ' + e(x.title) + '</b>：' + x.items.map(e).join(' ') + '</li>').join('');
 const sources = FC.FESTS.map(f => '<li>' + e(f.name) + '：' + f.src.map(s => '<a href="' + e(s[1]) + '" target="_blank" rel="noopener">' + e(s[0]) + '</a>').join('、') + '</li>').join('\n');
 let out = fs.readFileSync(tplPath, 'utf8').replace('{{YHEAD}}', ys.map(y => '<th>' + y + '</th>').join('')).replace('{{TABLE}}', table).replace('{{STATUS}}', status).replace('{{ETQ}}', etq).replace('{{SOURCES}}', sources).replace(/\{\{NF\}\}/g, FC.FESTS.length);
+const ttable = FC.TEMPLES.map(t => '<tr><td><b>' + e(t.name) + '</b></td><td>' + e(t.city) + '</td><td>' + e(t.main) + '</td><td>' + e(t.year) + '</td><td>' + (t.herit ? e(FC.T_HERIT[t.herit].name) : '') + '</td></tr>').join('\n');
+const tsrc = FC.TEMPLES.map(t => e(t.name) + '（' + t.src.filter(x => !/^內政部 臺灣宗教文化地圖$/.test(x[0])).map(x => '<a href="' + e(x[1]) + '" target="_blank" rel="noopener">' + e(x[0].replace(/^維基百科：.*/, '維基百科')) + '</a>').join('、') + '）').join('、');
+out = out.replace('{{TTABLE}}', ttable).replace('{{TSOURCES}}', tsrc).replace(/\{\{NT\}\}/g, FC.TEMPLES.length);
 if (/\{\{/.test(out)) throw new Error('template placeholder left');
 fs.writeFileSync(path.join(dir, 'manual.html'), out);
 console.log('manual ok', FC.FESTS.length);

@@ -59,6 +59,7 @@ with sync_playwright() as p:
     check(t.inner_text('#yearTxt') == '2027', '下一年')
     t.click('#btnEtq'); t.wait_for_timeout(200); check(t.is_visible('#etq.show'), '節慶須知'); t.keyboard.press('Escape')
     t.click('#btnSet'); t.wait_for_timeout(200); check(t.is_visible('#settings.show'), '常用設定'); t.keyboard.press('Escape')
+    t.close()
     m = ctx.new_page(); stub(m, 'M'); m.set_viewport_size({'width': 375, 'height': 760})
     m.goto(BASE + '#d=2026-05-05', wait_until='domcontentloaded'); m.wait_for_function('window.FestScene && FestScene.ready', timeout=60000); m.wait_for_timeout(1200)
     check(m.evaluate('document.documentElement.scrollWidth <= innerWidth'), '375px 無橫向捲動')

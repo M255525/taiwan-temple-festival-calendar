@@ -1,5 +1,5 @@
 // 僅供「加入主畫面」安裝需求使用：network-first + 同源快取備援。
-const CACHE_NAME = 'taiwan-fest-shell-v1';
+const CACHE_NAME = 'taiwan-fest-shell-v2';
 const SHELL_FILES = [
   './',
   './index.html',
@@ -7,6 +7,8 @@ const SHELL_FILES = [
   './data.js',
   './scene.js',
   './app.js',
+  './temples.js',
+  './guide.js',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
